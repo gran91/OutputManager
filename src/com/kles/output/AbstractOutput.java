@@ -19,6 +19,8 @@ public abstract class AbstractOutput implements IOutput, Runnable {
     public static final String WRITE = "WRITE";
     public static final String COPYFILE = "COPYFILE";
     public static final String DELETEFILE = "DELETEFILE";
+    public static final String PROCESS = "PROCESS";
+    public static final String SAVE = "SAVE";
 
     @Override
     public void run() {
@@ -32,10 +34,18 @@ public abstract class AbstractOutput implements IOutput, Runnable {
                 break;
             case READ:
                 try {
-                    write();
-                    save();
+                    read();
                 } catch (IOException ex) {
                 }
+                break;
+            case PROCESS:
+                try {
+                    process();
+                } catch (IOException ex) {
+                }
+                break;
+            case SAVE:
+                save();
                 break;
         }
     }
