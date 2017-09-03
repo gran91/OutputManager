@@ -25,7 +25,6 @@ import org.apache.poi.ss.usermodel.PrintSetup;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
@@ -115,39 +114,38 @@ public abstract class ExcelOutput extends AbstractOutput {
 
         int rownum = beginROW;
         int cellnum = beginCOL;
-        Row rowTitle = sheet.createRow(rownum);
-        Cell cellTitle = rowTitle.createCell(cellnum);
-        cellTitle.setCellValue(title);
-        cellTitle.setCellStyle(styles.get("cell_b_centered_locked"));
-        sheet.addMergedRegion(new CellRangeAddress(rownum, rownum, cellnum, cellnum + 1));
-
-        rownum++;
-        Row row = sheet.createRow(rownum);
+        Row row = sheet.createRow(rownum++);
+//        Cell cellTitle = row.createCell(cellnum);
+//        cellTitle.setCellValue(title);
+//        cellTitle.setCellStyle(styles.get("cell_bold_centered_locked"));
+//        sheet.addMergedRegion(new CellRangeAddress(rownum, rownum, cellnum, cellnum + header.length));
+//
+//        row = sheet.createRow(rownum++);
         for (int k = 0; k < header.length; k++) {
-            Cell cell = row.createCell(cellnum);
+            Cell cell = row.createCell(cellnum++);
             cell.setCellValue(header[k]);
             cell.setCellStyle(styles.get("header"));
-            rownum++;
-            row = sheet.createRow(rownum);
+            //rownum++;
+//            row = sheet.createRow(rownum);
         }
-        rownum = beginROW++;
-        cellnum++;
-        row = sheet.getRow(rownum);
-        for (int k = 0; k < header.length; k++) {
-            Cell cell = row.createCell(cellnum);
-            cell.setCellValue(header[k]);
-            cell.setCellStyle(styles.get("cell_normal_centered"));
-            sheet.autoSizeColumn(k);
-            rownum++;
-            row = sheet.getRow(rownum);
+        for (String[] tab : data) {
+            cellnum = beginCOL;
+            row = sheet.createRow(rownum++);
+            for (int k = 0; k < tab.length; k++) {
+                Cell cell = row.createCell(cellnum++);
+                cell.setCellValue(tab[k]);
+                cell.setCellStyle(styles.get("cell_normal_centered"));
+                sheet.autoSizeColumn(k);
+            }
         }
         return sheet;
     }
 
     /**
      * create a library of cell styles
+     *
      * @param wb
-     * @return 
+     * @return
      */
     public static Map<String, CellStyle> createStyles(Workbook wb) {
         Map<String, CellStyle> styles = new HashMap<>();

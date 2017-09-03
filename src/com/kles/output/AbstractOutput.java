@@ -5,13 +5,15 @@
  */
 package com.kles.output;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import javafx.concurrent.Task;
 
 /**
  *
  * @author Jeremy.CHAUT
  */
-public abstract class AbstractOutput implements IOutput, Runnable {
+public abstract class AbstractOutput extends Task<Void> implements IOutput, Runnable {
 
     protected String action;
     protected String filepath;
@@ -64,5 +66,31 @@ public abstract class AbstractOutput implements IOutput, Runnable {
 
     public void setFilePath(String filepath) {
         this.filepath = filepath;
+    }
+
+    @Override
+    protected Void call() throws Exception {
+        run();
+        return null;
+    }
+
+    @Override
+    public void read() throws FileNotFoundException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void write() throws FileNotFoundException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void process() throws FileNotFoundException, IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean save() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
