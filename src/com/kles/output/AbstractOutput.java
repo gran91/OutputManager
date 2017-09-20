@@ -24,8 +24,24 @@ public abstract class AbstractOutput extends Task<Void> implements IOutput, Runn
     public static final String PROCESS = "PROCESS";
     public static final String SAVE = "SAVE";
 
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public String getFilePath() {
+        return filepath;
+    }
+
+    public void setFilePath(String filepath) {
+        this.filepath = filepath;
+    }
+
     @Override
-    public void run() {
+    protected Void call() throws Exception {
         switch (action) {
             case WRITE:
                 try {
@@ -50,27 +66,6 @@ public abstract class AbstractOutput extends Task<Void> implements IOutput, Runn
                 save();
                 break;
         }
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public String getFilePath() {
-        return filepath;
-    }
-
-    public void setFilePath(String filepath) {
-        this.filepath = filepath;
-    }
-
-    @Override
-    protected Void call() throws Exception {
-        run();
         return null;
     }
 

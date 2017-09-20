@@ -86,6 +86,12 @@ public class CSVTableView extends AbstractOutput {
         return true;
     }
 
+    @Override
+    protected Void call() throws Exception {
+        super.call();
+        return null;
+    }
+
     public File getFile() {
         return file;
     }
